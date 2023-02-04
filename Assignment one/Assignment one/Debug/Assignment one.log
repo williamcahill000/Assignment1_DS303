@@ -1,0 +1,4 @@
+﻿  Function.cpp
+C:\Users\willi\source\repos\Assignment1_DS303\Assignment one\Assignment one\Function.cpp(31,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\willi\source\repos\Assignment1_DS303\Assignment one\Assignment one\Function.cpp(57,21): warning C4018: '<': signed/unsigned mismatch
+  Assignment one.vcxproj -> C:\Users\willi\source\repos\Assignment1_DS303\Assignment one\Debug\Assignment one.exe
