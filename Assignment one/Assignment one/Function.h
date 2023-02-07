@@ -7,10 +7,6 @@
 #include <algorithm>
 using namespace std;
 
-struct Data {
-	int x;
-};
-
 void readFile(vector<int>& v1);
 //pre: no preconditions
 //post: Reads file and output each line of integers into a vector of type data.

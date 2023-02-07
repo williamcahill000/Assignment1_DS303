@@ -5,8 +5,10 @@ void readFile(vector<int>& v1)
 	//Opening the file
 	fstream inFile;
 	inFile.open("integer.txt");
+	//checks if fil is not open, printing a statement and terminating the function if so.
 	if (!inFile.is_open()) {
 		cout << "File did not open" << endl;
+		return;
 	}
 	
 	string inString;
@@ -28,14 +30,20 @@ void readFile(vector<int>& v1)
 void returnNumIndex(int n, vector<int> v1) {
 	//iterates through the vector and checks if the integer is inside the vector, otherwise returning nothing.
 	int index = 0;
-	for (int i = 0; i < v1.size(); i++) {
-		if (v1[i] == n) {
-			index = i;
-			cout << "The integer " << n << " was found at index value " << i << endl;
+	//Try and exception handling for out of range index value
+	try {
+		for (int i = 0; i < v1.size(); i++) {
+			if (v1[i] == n) {
+				index = i;
+				cout << "The integer " << n << " was found at index value " << i << endl;
+			}
+		}
+		if (v1[index] != n) {
+			cout << "The integer wasn't found in the given vector";
 		}
 	}
-	if (v1[index] != n) {
-		cout << "The integer wasn't found in the given vector";
+	catch (const out_of_range& e) {
+		cout << e.what() << endl;
 	}
 }
 
@@ -49,16 +57,22 @@ void removeInteger(int n, vector<int>& v1) {
 	cout << "Do you want to remove the integer or replace the integer with zero? " << endl;
 	cout << "Type remove or replace: " << endl;
 	cin >> action;
-	if (action == "remove") {
-		v1.erase(v1.begin() + n);
-
-	}
-	else if (action == "replace") {
-		for (int i = 0; i < v1.size(); i++) {
-			if (i = n) {
-				v1[i] = 0;
-			}
-			break;
+	//try and exception handling for out of range index value
+	try {
+		if (action == "remove") {
+			v1.erase(v1.begin() + n);
 		}
+
+		else if (action == "replace") {
+			for (int i = 0; i < v1.size(); i++) {
+				if (i = n) {
+					v1[i] = 0;
+				}
+				break;
+			}
+		}
+	}
+	catch (const out_of_range& e) {
+		cout << e.what() << endl;
 	}
 }
