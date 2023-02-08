@@ -1,3 +1,7 @@
+//William Cahill
+//Data Structures 303
+//2/07/23
+
 #include <iostream>
 #include "Function.h"
 using namespace std;
