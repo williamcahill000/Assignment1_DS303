@@ -1,74 +1,76 @@
 #include "Function.h"
 
-void readFile(vector<int>& v1) 
-{
-	//Opening the file
+void readFile(int array[], int size) {
+	//reads all of the integers from the file integers.txt into the array
+	int count = 0;
+
 	fstream inFile;
 	inFile.open("integer.txt");
-	//checks if fil is not open, printing a statement and terminating the function if so.
 	if (!inFile.is_open()) {
-		cout << "File did not open" << endl;
+		cout << "File is not open." << endl;
 		return;
 	}
-	
-	string inString;
-	int a, b, c, d, e, f, g, h, i, j;
-
-	//gets line and assigns each integer to a variable and inserts it to the end of the vector.
-	while (getline(inFile, inString)) {
-		stringstream ss;
-		ss << inString;
-		ss >> a >> b >> c >> d >> e >> f >> g >> h >> i >> j;
-		v1.insert(v1.end(), { a, b, c, d, e, f, g, h, i, j });
+	else {
+		while (count < size && inFile >> array[count])
+			count++;
 	}
-
-	//closes file
-	inFile.close();
-
 }
 
-void returnNumIndex(int n, vector<int> v1) {
-	//iterates through the vector and checks if the integer is inside the vector, otherwise returning nothing.
-	int index = 0;
-	//Try and exception handling for out of range index value
+size_t resize(int** array, size_t oldsize, size_t amount) {
+	//resizes the vector, inspiration from a youtube video
+	size_t new_size = oldsize + amount;
+	int* new_array = new int[new_size];
+
+	memcpy(new_array, *array, oldsize * sizeof(int));
+	delete[] *array;
+	*array = new_array;
+	return new_size;
+}
+
+void checkInteger(int n, int array[], int size) {
+	//iterates through the array and if it finds integer n, it prints out where it found the integer n
+	//try and exception handling in case the integer n given is out of range of the array.
 	try {
-		for (int i = 0; i < v1.size(); i++) {
-			if (v1[i] == n) {
-				index = i;
-				cout << "The integer " << n << " was found at index value " << i << endl;
+		for (int i = 0; i < size; i++) {
+			if (array[i] == n) {
+				cout << "The integer " << n << " is located at index " << i << endl;
+				return;
 			}
 		}
-		if (v1[index] != n) {
-			cout << "The integer wasn't found in the given vector";
-		}
+		cout << "The integer wasn't found in the given array.";
 	}
 	catch (const out_of_range& e) {
 		cout << e.what() << endl;
 	}
 }
 
-void addInteger(int n, vector<int>& v1) {
-	v1.insert(v1.end(), n);
-	cout << "the integer you gave was entered.";
+void addInteger(int n, int array[], int size) {
+	//iterates through the array and if it finds an empty spot it replaces it with n.
+	for (int i = 0; i < size; i++) {
+		if (array[i+1] == 0 || array[i+1] < 0) {
+			array[i+1] = n;
+		}
+	}
 }
 
-void removeInteger(int n, vector<int>& v1) {
-	string action;
-	cout << "Do you want to remove the integer or replace the integer with zero? " << endl;
-	cout << "Type remove or replace: " << endl;
-	cin >> action;
-	//try and exception handling for out of range index value
+void removeOrReplace(int index, int array[], int size) {
+	//asks user to either replace or remove the integer n
+	//try and exception handling if the given index is out of range of the array.
 	try {
-		if (action == "remove") {
-			v1.erase(v1.begin() + n);
+		string action;
+		cout << "Would you like to Remove or Replace the integer at index " << index << "? (type 'Remove' or 'Replace' " << endl;
+		cin >> action;
+		if (action == "Remove") {
+			for (int i = index; i < size; i++) {
+				array[i] = array[i + 1];
+			}
 		}
 
-		else if (action == "replace") {
-			for (int i = 0; i < v1.size(); i++) {
-				if (i = n) {
-					v1[i] = 0;
+		else if (action == "Replace") {
+			for (int i = 0; i < size; i++) {
+				if (array[i] == array[index]) {
+					array[i] = 0;
 				}
-				break;
 			}
 		}
 	}
